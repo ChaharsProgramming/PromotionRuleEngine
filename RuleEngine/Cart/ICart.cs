@@ -5,6 +5,6 @@ namespace RuleEngine.Cart
     public interface ICart
     {
         public void AddItem(SKUItem skuItem);
-        public void RemoveItem(SKUItem skuItem);
+        public void RemoveItem(string skuItemId);
     }
 }

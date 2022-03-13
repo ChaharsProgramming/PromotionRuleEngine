@@ -1,32 +1,46 @@
-﻿using RuleEngine.SKU;
+﻿using RuleEngine.Cart;
+using RuleEngine.SKU;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RuleEngine.Inventory
 {
     public class Inventory : IInventory
     {
-        public Inventory()
+        public readonly ICart _cart;
+        public List<SKUItem> skuItems { get; }
+        public Inventory(Cart.ICart cart)
         {
-                
+            _cart = cart;
+            skuItems = new List<SKUItem>();
         }
-        public Inventory AddItemToCart(string skuItem)
+        public Inventory AddItemToCart(string item)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(item))
+            {
+                _cart.AddItem(skuItems.FirstOrDefault(i => item.Equals(i.ID)));
+            }
+            return this;
         }
 
         public Inventory AddSKUitem(SKUItem sKUItem)
         {
-            throw new NotImplementedException();
+            if (sKUItem != null)
+            {
+                skuItems.Add(sKUItem);
+            }
+            return this;
         }
 
-        public Cart.Cart GetCart()
+        public ICart GetCart()
         {
-            throw new NotImplementedException();
+            return _cart;
         }
 
         public SKUItem GetSKUItem(string skuItem)
         {
-            throw new NotImplementedException();
+            return skuItems.FirstOrDefault(i => skuItem.Equals(i.ID));
         }
     }
 }

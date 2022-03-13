@@ -1,4 +1,6 @@
-﻿using RuleEngine.Inventory;
+﻿using Moq;
+using RuleEngine.Cart;
+using RuleEngine.Inventory;
 using RuleEngine.SKU;
 using System;
 using Xunit;
@@ -8,9 +10,11 @@ namespace RuleEngineTest
     public class InventoryTest
     {
         private readonly Inventory _inventory;
+        private readonly Mock<ICart> mockCart;
         public InventoryTest()
         {
-            _inventory = new Inventory();
+            mockCart = new Mock<ICart>();
+            _inventory = new Inventory(mockCart.Object);
         }
 
         [Fact]

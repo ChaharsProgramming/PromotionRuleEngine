@@ -22,7 +22,14 @@ namespace RuleEngineTest
         [Fact]
         public void TestRemoveCart_withValidSKUItem_ReturnSKUId()
         {
-            Assert.Throws<NotImplementedException>(() => _cart.RemoveItem(new SKUItem()));
+            Assert.Throws<NotImplementedException>(() => _cart.RemoveItem(""));
+        }
+
+        [Fact]
+        public void TestTotalPrice_withValidSKUItem_ReturnSKUId()
+        {
+            Assert.Throws<NotImplementedException>(() => _cart.RemoveItem(""));
+            
         }
     }
 }

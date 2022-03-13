@@ -1,4 +1,5 @@
-﻿using RuleEngine.SKU;
+﻿using RuleEngine.Cart;
+using RuleEngine.SKU;
 
 namespace RuleEngine.Inventory
 {
@@ -10,7 +11,7 @@ namespace RuleEngine.Inventory
 
         public SKUItem GetSKUItem(string skuItem);
 
-        public Cart.Cart GetCart();
+        public ICart GetCart();
 
     }
 }

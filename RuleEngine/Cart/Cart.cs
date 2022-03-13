@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RuleEngine.Cart
 {
-    public class Cart : CartBase, ICart
+    public class Cart : ICart
     {
         public List<CartItem> cartItems { get; set; }
         public Cart()
@@ -13,19 +13,30 @@ namespace RuleEngine.Cart
             cartItems = new List<CartItem>();
         }
 
-        public void AddItem(SKUItem skuItem)
+        public string AddItem(SKUItem skuItem)
         {
-            cartItems.Add(new CartItem { Item = skuItem, FinalPrice = skuItem.ItemPrice, IsPromotionApplied = false });
+            cartItems.Add(new CartItem { Item = skuItem, TotalPrice = skuItem._itemPrice, IsPromotionApplied = false });
+            return skuItem._id;
         }
 
-        public void RemoveItem(string skuItemId)
+        public string RemoveItem(string skuItemId)
         {
-            cartItems.Remove(cartItems.FirstOrDefault(crt => skuItemId.Equals(crt.Item.ID)));
+            cartItems.Remove(cartItems.FirstOrDefault(crt => skuItemId.Equals(crt.Item._id)));
+            return skuItemId;
         }
 
-        public override decimal TotalPrice()
+        public bool IsItemExist(string skuItemId)
         {
-            return cartItems.Sum(i => i.FinalPrice);
+            if(cartItems.Contains(cartItems.FirstOrDefault(crt => skuItemId.Equals(crt.Item._id))))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public decimal TotalPrice()
+        {
+            return cartItems.Sum(i => i.TotalPrice);
         }
     }
 }

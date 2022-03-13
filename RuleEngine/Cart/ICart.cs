@@ -4,7 +4,9 @@ namespace RuleEngine.Cart
 {
     public interface ICart
     {
-        public void AddItem(SKUItem skuItem);
-        public void RemoveItem(string skuItemId);
+        public string AddItem(SKUItem skuItem);
+        public string RemoveItem(string skuItemId);
+        public bool IsItemExist(string skuItemId);
+        public decimal TotalPrice();
     }
 }

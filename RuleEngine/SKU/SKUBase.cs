@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RuleEngine.Cart
+namespace RuleEngine.SKU
 {
-    public abstract class CartBase
+    public abstract class SKUBase
     {
-        public abstract decimal TotalPrice();
+        public abstract void UpdateUnitPrice(decimal price);
     }
 }

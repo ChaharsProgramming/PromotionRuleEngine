@@ -19,7 +19,7 @@ namespace RuleEngine.Inventory
         {
             if (!string.IsNullOrWhiteSpace(item))
             {
-                _cart.AddItem(skuItems.FirstOrDefault(i => item.Equals(i.ID)));
+                _cart.AddItem(skuItems.FirstOrDefault(i => item.Equals(i._id)));
             }
             return this;
         }
@@ -40,7 +40,7 @@ namespace RuleEngine.Inventory
 
         public SKUItem GetSKUItem(string skuItem)
         {
-            return skuItems.FirstOrDefault(i => skuItem.Equals(i.ID));
+            return skuItems.FirstOrDefault(i => skuItem.Equals(i._id));
         }
     }
 }

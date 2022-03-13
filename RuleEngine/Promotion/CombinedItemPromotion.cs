@@ -19,6 +19,7 @@ namespace RuleEngine.Promotion
         }
         public override void ApplyPromotion(Cart.ICart cart)
         {
+            if (FixedPrice <= 0) throw new PromotionRuleEngineException("Price can not be zero!", new ArgumentNullException());
             var pendingSKUItems = SKUItems;
             var applicableCartItem = cart.cartItems.Where(crt => !crt.IsPromotionApplied);
             foreach (var item in applicableCartItem)

@@ -20,6 +20,7 @@ namespace RuleEngine.Promotion
         }
         public override void ApplyPromotion(Cart.ICart cart)
         {
+            if (FixedPrice <= 0) throw new PromotionRuleEngineException("Price can not be zero!", new ArgumentNullException());
             decimal reducedPrice = 0;
             var discountedItemPrice = FixedPrice / NoOfItems;
             var applicableCartItem = cart.cartItems.Where(crt => !crt.IsPromotionApplied && SKUItem == crt.Item._id);
@@ -27,6 +28,8 @@ namespace RuleEngine.Promotion
             reducedPrice = FixedPrice - NoOfItems * discountedItemPrice;
             foreach (var item in applicableCartItem)
             {
+                
+
                 item.TotalPrice = discountedItemPrice + reducedPrice;
                 item.IsPromotionApplied = true;
                 reducedPrice = 0;

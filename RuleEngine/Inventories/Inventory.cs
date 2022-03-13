@@ -1,4 +1,5 @@
 ﻿using RuleEngine.Cart;
+using RuleEngine.Promotion;
 using RuleEngine.SKU;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,13 @@ namespace RuleEngine.Inventory
 {
     public class Inventory : IInventory
     {
-        public readonly ICart _cart;
+        public ICart _cart;
         public List<SKUItem> skuItems { get; }
-        public Inventory(Cart.ICart cart)
+        public List<PromotionBase> promotions { get; set; }
+
+        public Inventory()
         {
-            _cart = cart;
+            _cart = new Cart.Cart();
             skuItems = new List<SKUItem>();
         }
         public Inventory AddItemToCart(string item)
@@ -41,6 +44,16 @@ namespace RuleEngine.Inventory
         public SKUItem GetSKUItem(string skuItem)
         {
             return skuItems.FirstOrDefault(i => skuItem.Equals(i._id));
+        }
+
+        public Inventory AddIndividualPromotion(PromotionBase promotion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Inventory AddBulkPromotion(List<PromotionBase> promotions)
+        {
+            throw new NotImplementedException();
         }
     }
 }

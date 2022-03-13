@@ -6,11 +6,34 @@ using System.Threading.Tasks;
 
 namespace RuleEngine.Promotion
 {
-    public class IndividualItemPromotion
+    public class IndividualItemPromotion : PromotionBase
     {
-        public void ApplyPromotion()
+        public string SKUItem { get; set; }
+        public int FixedPrice { get; set; }
+        public int NoOfItems { get; set; }
+
+        public IndividualItemPromotion(string skuItem, int fixedPrice, int noOfItems)
         {
-            throw new NotImplementedException();
+            SKUItem = skuItem;
+            NoOfItems = noOfItems;
+            FixedPrice = fixedPrice;
+        }
+        public override void ApplyPromotion(Cart.ICart cart)
+        {
+            decimal reducedPrice = 0;
+            var discountedItemPrice = FixedPrice / NoOfItems;
+            var applicableCartItem = cart.cartItems.Where(crt => !crt.IsPromotionApplied && SKUItem == crt.Item._id);
+
+            reducedPrice = FixedPrice - NoOfItems * discountedItemPrice;
+            foreach (var item in applicableCartItem)
+            {
+                item.TotalPrice = discountedItemPrice + reducedPrice;
+                item.IsPromotionApplied = true;
+                reducedPrice = 0;
+            }
+
+            //throw new NotImplementedException();
         }
     }
+
 }

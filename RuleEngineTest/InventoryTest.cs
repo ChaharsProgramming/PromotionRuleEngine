@@ -15,7 +15,7 @@ namespace RuleEngineTest
         public InventoryTest()
         {
             _mockCart = new Mock<ICart>();
-            _inventory = new Inventory(_mockCart.Object);
+            _inventory = new Inventory();
 
             //arrange
             _inventory.AddSKUitem(new SKUItem("A", 50));
@@ -29,16 +29,18 @@ namespace RuleEngineTest
         {
             var result = _inventory.AddItemToCart("A");
            
-            Assert.Equal(4, result.skuItems.Count);
+            Assert.Equal(1, result._cart.cartItems.Count);
         }
 
         [Fact]
         public void TestGetCart_withValidItem_ReturnCart()
         {
+            _inventory.AddItemToCart("A");
             _mockCart.Setup(crt => crt.IsItemExist("A")).Returns(true);
             //arrange
             var result = _inventory.GetCart();
             //assert
+            
             Assert.True(result.IsItemExist("A"));
         }
 
@@ -51,6 +53,18 @@ namespace RuleEngineTest
             //Assert
             Assert.Equal("A", result._id);
             Assert.Equal(50, result._itemPrice);
+        }
+
+        [Fact]
+        public void TestAddIndividualPromotion()
+        {
+            Assert.Throws<NotImplementedException>(() => _inventory.AddIndividualPromotion(null));
+        }
+
+        [Fact]
+        public void TestAddBulkPromotion()
+        {
+            Assert.Throws<NotImplementedException>(() => _inventory.AddBulkPromotion(null));
         }
     }
 }

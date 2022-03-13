@@ -21,27 +21,25 @@ namespace RuleEngineTest
             var cartItem = new CartItem();
             cartItem.IsPromotionApplied = true;
             cartItem.Item = new SKUItem("C", 20);
-            cartItem.TotalPrice = 150;
+            cartItem.TotalPrice = 20;
 
             var cartItem2 = new CartItem();
-            cartItem2.IsPromotionApplied = true;
+            cartItem2.IsPromotionApplied = false;
             cartItem2.Item = new SKUItem("D", 15);
-            cartItem2.TotalPrice = 150;
+            cartItem2.TotalPrice = 15;
 
             CombinedItemPromotion pr1 = new CombinedItemPromotion(new List<string> { "C", "D" }, 30);
-            //List<PromotionBase> promotions = new() { pr1 };
             var cart = new Cart() { cartItems = { cartItem } };
+            inventory.AddSKUitem(new SKUItem("C", 20));
+            inventory.AddSKUitem(new SKUItem("D", 15));
             inventory.AddItemToCart("C");
             inventory.AddItemToCart("D");
 
 
-            Assert.Equal(Convert.ToDecimal(100), inventory._cart.TotalPrice());
-            //_Cart.Setup(crt => crt.AddItem(new SKUItem("A", 50))).Returns("1");
-            //_inventory.Setup(inv => inv.AddItemToCart("A")).Returns(new Inventory()
-            //{ skuItems = { new SKUItem("A", 50) }, promotions = promotions, _cart = cart });
+            Assert.Equal(Convert.ToDecimal(35), inventory._cart.TotalPrice());
             pr1.ApplyPromotion(cart);
 
-            Assert.Equal(Convert.ToDecimal(50), inventory._cart.TotalPrice());
+            Assert.Equal(Convert.ToDecimal(30), inventory._cart.TotalPrice());
 
         }
     }

@@ -14,8 +14,8 @@ namespace RuleEngineTest
 {
     public class IndividualItemPromotionTest
     {
-        //private Mock<ICart> _Cart;
-       //private Mock<IInventory> _inventory;
+        //private readonly Inventory _inventory;
+        //private readonly Cart _inventory;
 
         public IndividualItemPromotionTest()
         {
@@ -26,25 +26,29 @@ namespace RuleEngineTest
         [Fact]
         public void TestApplyPromotion_WithValidInput_ReturnApplyPromotionSuceess()
         {
-            var cartItem = new CartItem();
             var inventory = new Inventory();
-            cartItem.IsPromotionApplied = true;
+            var cartItem = new CartItem(); 
+            cartItem.IsPromotionApplied = false;
             cartItem.Item = new SKUItem("A", 50);
-            cartItem.TotalPrice = 150;
+            cartItem.TotalPrice = 50;
 
-            IndividualItemPromotion pr1 = new("A", 3, 130);
+            IndividualItemPromotion pr1 = new("A", 130, 3);
             //List<PromotionBase> promotions = new() { pr1 };
-            var cart = new Cart() { cartItems = { cartItem } };
+            var cart = new Cart() { cartItems = { cartItem, cartItem, cartItem } };
+            inventory.AddSKUitem(new SKUItem("A", 50));
+            inventory.AddSKUitem(new SKUItem("A", 50));
+            inventory.AddSKUitem(new SKUItem("A", 50));
+
+            inventory.AddItemToCart("A");
+            inventory.AddItemToCart("A");
             inventory.AddItemToCart("A");
 
 
-            Assert.Equal(Convert.ToDecimal(100), inventory._cart.TotalPrice());
-            //_Cart.Setup(crt => crt.AddItem(new SKUItem("A", 50))).Returns("1");
-            //_inventory.Setup(inv => inv.AddItemToCart("A")).Returns(new Inventory()
-            //{ skuItems = { new SKUItem("A", 50) }, promotions = promotions, _cart = cart });
+            Assert.Equal(Convert.ToDecimal(150), inventory._cart.TotalPrice());
+
             pr1.ApplyPromotion(cart);
 
-            Assert.Equal(Convert.ToDecimal(50), inventory._cart.TotalPrice());
+            Assert.Equal(Convert.ToDecimal(130), inventory._cart.TotalPrice());
            
         }
     }

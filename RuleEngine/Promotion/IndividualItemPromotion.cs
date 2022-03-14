@@ -18,6 +18,7 @@ namespace RuleEngine.Promotion
             NoOfItems = noOfItems;
             FixedPrice = fixedPrice;
         }
+       
         public override void ApplyPromotion(Cart.ICart cart)
         {
             if (FixedPrice <= 0) throw new PromotionRuleEngineException("Price can not be zero!", new ArgumentNullException());
@@ -37,6 +38,8 @@ namespace RuleEngine.Promotion
 
             //throw new NotImplementedException();
         }
+
+       
     }
 
 }

@@ -27,15 +27,16 @@ namespace RuleEngineTest
         [Fact]
         public void TestApplyPromotion_WithIndividualItemPromotino_ReturnExpectedReducedPrice()
         {
+            string inputPromo = "3 A for 130";
             var inventory = new Inventory();
             var cartItem = new CartItem(); 
             cartItem.IsPromotionApplied = false;
             cartItem.Item = new SKUItem("A", 50);
             cartItem.TotalPrice = 50;
 
-            IndividualItemPromotion individualPromotion = new("A", 130, 3);
-            //List<PromotionBase> promotions = new() { pr1 };
-            var cart = new Cart() { cartItems = { cartItem, cartItem, cartItem } };
+            //IndividualItemPromotion individualPromotion = new("A", 130, 3);
+
+            //var cart = new Cart() { cartItems = { cartItem, cartItem, cartItem } };
             inventory.AddSKUitem(new SKUItem("A", 50));
             inventory.AddSKUitem(new SKUItem("A", 50));
             inventory.AddSKUitem(new SKUItem("A", 50));
@@ -43,11 +44,13 @@ namespace RuleEngineTest
             inventory.AddItemToCart("A");
             inventory.AddItemToCart("A");
             inventory.AddItemToCart("A");
+            
 
 
             Assert.Equal(Convert.ToDecimal(150), inventory._cart.TotalPrice());
 
-            individualPromotion.ApplyPromotion(cart);
+            inventory.AddPromotion(inputPromo);
+            inventory.Checkout();
 
             Assert.Equal(Convert.ToDecimal(130), inventory._cart.TotalPrice());
            

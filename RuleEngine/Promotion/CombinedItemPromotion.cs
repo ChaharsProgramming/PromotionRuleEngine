@@ -30,5 +30,7 @@ namespace RuleEngine.Promotion
             }
             //throw new NotImplementedException();
         }
+
+
     }
 }

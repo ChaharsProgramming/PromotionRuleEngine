@@ -56,15 +56,21 @@ namespace RuleEngineTest
         }
 
         [Fact]
-        public void TestAddIndividualPromotion()
+        public void TestAddPromotion()
         {
-            Assert.Throws<NotImplementedException>(() => _inventory.AddIndividualPromotion(null));
+            string InputPromo = "3 A for 130";
+            var result = _inventory.AddPromotion(InputPromo);
+            Assert.Equal(1, result.promotions.Count);
         }
 
         [Fact]
-        public void TestAddBulkPromotion()
+        public void TestCheckOut_withAppliedPromos()
         {
-            Assert.Throws<NotImplementedException>(() => _inventory.AddBulkPromotion(null));
+            string InputPromo = "3 A for 130";
+            var promos = _inventory.AddPromotion(InputPromo);
+            var checkout = promos.Checkout();
+            Assert.Equal(4, checkout.skuItems.Count);
+           
         }
     }
 }

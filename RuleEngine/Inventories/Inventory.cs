@@ -4,6 +4,7 @@ using RuleEngine.SKU;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RuleEngine.Inventory
 {
@@ -17,6 +18,9 @@ namespace RuleEngine.Inventory
         {
             _cart = new Cart.Cart();
             skuItems = new List<SKUItem>();
+            promotions = new List<PromotionBase>();
+
+
         }
         public Inventory AddItemToCart(string item)
         {
@@ -46,14 +50,69 @@ namespace RuleEngine.Inventory
             return skuItems.FirstOrDefault(i => skuItem.Equals(i._id));
         }
 
-        public Inventory AddIndividualPromotion(PromotionBase promotion)
+        public Inventory AddPromotion(PromotionBase promotion)
         {
-            throw new NotImplementedException();
+            if (promotion != null) promotions.Add(promotion);
+            return this;
         }
 
-        public Inventory AddBulkPromotion(List<PromotionBase> promotions)
+        public Inventory AddPromotion(string promotion)
         {
-            throw new NotImplementedException();
+            if (Regex.IsMatch(promotion, @"^\d"))
+            {
+                AddPromotion(AddPromotionForIndividualFixedItemPromotion(promotion));
+            }
+            else
+            {
+                AddPromotion(AddPromotionForCombinedItemPromotion(promotion));
+            }
+            return this;
         }
+
+        public Inventory Checkout()
+        {
+            promotions.ForEach(p => p.ApplyPromotion(_cart));
+            return this;
+        }
+
+        public CombinedItemPromotion AddPromotionForCombinedItemPromotion(string promotion)
+        {
+            //string A B C D for 130
+            List<string> promotionDetails = GetCombinedPromotionDetail(promotion);
+
+            var skuitem = promotionDetails.Take(promotionDetails.Count() - 1).ToList();
+            var price = Convert.ToInt32(promotionDetails.Last());
+            //new CombinedItemPromotion(skuitem, price).ApplyPromotion(_cart);
+            return new CombinedItemPromotion(skuitem, price);
+        }
+
+        public IndividualItemPromotion AddPromotionForIndividualFixedItemPromotion(string promotion)
+        {
+            List<string> promotionDetails = GetIndividualPromotionDetail(promotion);
+
+            var skuitems = promotionDetails[1].Replace("'s", "");
+            var noOfItems = Convert.ToInt32(promotionDetails.First());
+            var price = Convert.ToInt32(promotionDetails.Last());
+            //new IndividualItemPromotion(skuitems, price, noOfItems).ApplyPromotion(_cart);
+            return new IndividualItemPromotion(skuitems, price, noOfItems);
+        }
+
+        private static List<string> GetIndividualPromotionDetail(string promotion)
+        {
+            //string 3 A's FOR 130
+            return promotion.Split(" ")
+               .Where(p => !string.IsNullOrEmpty(p.Trim())
+               && !"of".Equals(p)
+               && !"for".Equals(p)).ToList();
+        }
+
+        private static List<string> GetCombinedPromotionDetail(string promotion)
+        {
+            return promotion.Split(" ")
+                            .Where(p => !string.IsNullOrEmpty(p.Trim())
+                            && !"&".Equals(p)
+                            && !"for".Equals(p)).ToList();
+        }
+
     }
 }

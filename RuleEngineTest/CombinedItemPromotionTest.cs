@@ -18,27 +18,28 @@ namespace RuleEngineTest
         [Fact]
         public void TestApplyPromotion_WithCombinedItemPromotion_ReturnApplyPromotionPrice()
         {
+            string inputPromo = "C D for 30";
             var inventory = new Inventory();
             var cartItem = new CartItem();
-            cartItem.IsPromotionApplied = true;
+            cartItem.IsPromotionApplied = false;
             cartItem.Item = new SKUItem("C", 20);
             cartItem.TotalPrice = 20;
 
-            var cartItem2 = new CartItem();
-            cartItem2.IsPromotionApplied = false;
-            cartItem2.Item = new SKUItem("D", 15);
-            cartItem2.TotalPrice = 15;
+            var cartItem1 = new CartItem();
+            cartItem1.IsPromotionApplied = false;
+            cartItem1.Item = new SKUItem("D", 15);
+            cartItem1.TotalPrice = 15;
 
-            CombinedItemPromotion pr1 = new CombinedItemPromotion(new List<string> { "C", "D" }, 30);
-            var cart = new Cart() { cartItems = { cartItem } };
             inventory.AddSKUitem(new SKUItem("C", 20));
             inventory.AddSKUitem(new SKUItem("D", 15));
+
             inventory.AddItemToCart("C");
             inventory.AddItemToCart("D");
 
-
             Assert.Equal(Convert.ToDecimal(35), inventory._cart.TotalPrice());
-            pr1.ApplyPromotion(cart);
+
+            inventory.AddPromotion(inputPromo);
+            inventory.Checkout();
 
             Assert.Equal(Convert.ToDecimal(30), inventory._cart.TotalPrice());
 
@@ -47,6 +48,7 @@ namespace RuleEngineTest
         [Fact]
         public void TestApplyPromotion_WithCombinedItemPromotionWithFixedPriceZero_ThrowPromotionRuleEngineException()
         {
+           
             var inventory = new Inventory();
             var cartItem = new CartItem();
             cartItem.IsPromotionApplied = true;

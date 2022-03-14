@@ -3,6 +3,7 @@ using System.Text;
 
 namespace RuleEngine
 {
+    //*TODO: UI interaction is pending with console
     class Program
     {
         static void Main(string[] args)

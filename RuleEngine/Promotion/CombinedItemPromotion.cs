@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RuleEngine.Promotion
 {
@@ -28,9 +26,6 @@ namespace RuleEngine.Promotion
                 item.IsPromotionApplied = true;
                 pendingSKUItems.Remove(item.Item._id);
             }
-            //throw new NotImplementedException();
         }
-
-
-    }
+   }
 }

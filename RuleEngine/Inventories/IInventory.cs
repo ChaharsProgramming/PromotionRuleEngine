@@ -15,6 +15,8 @@ namespace RuleEngine.Inventory
 
         public ICart GetCart();
 
+        public Inventory AddPromotion(string promotion);
+
         public Inventory Checkout();
 
         //public Inventory AddPromotion(PromotionBase promotion);

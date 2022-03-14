@@ -5,9 +5,6 @@ using RuleEngine.Promotion;
 using RuleEngine.SKU;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace RuleEngineTest

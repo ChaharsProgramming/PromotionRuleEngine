@@ -1,5 +1,4 @@
 ﻿using RuleEngine.SKU;
-using System;
 namespace RuleEngine.Cart
 {
     public class CartItem

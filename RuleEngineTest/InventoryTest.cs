@@ -2,8 +2,6 @@
 using RuleEngine.Cart;
 using RuleEngine.Inventory;
 using RuleEngine.SKU;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace RuleEngineTest

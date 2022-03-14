@@ -33,11 +33,6 @@ namespace RuleEngine.Promotion
                 item.IsPromotionApplied = true;
                 reducedPrice = 0;
             }
-
-            //throw new NotImplementedException();
-        }
-
-       
+        }    
     }
-
 }

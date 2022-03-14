@@ -1,6 +1,5 @@
 ﻿using RuleEngine.Cart;
 using RuleEngine.SKU;
-using System;
 using Xunit;
 
 namespace RuleEngineTest

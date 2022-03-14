@@ -50,12 +50,6 @@ namespace RuleEngine.Inventory
             return skuItems.FirstOrDefault(i => skuItem.Equals(i._id));
         }
 
-        public Inventory AddPromotion(PromotionBase promotion)
-        {
-            if (promotion != null) promotions.Add(promotion);
-            return this;
-        }
-
         public Inventory AddPromotion(string promotion)
         {
             if (Regex.IsMatch(promotion, @"^\d"))
@@ -75,7 +69,13 @@ namespace RuleEngine.Inventory
             return this;
         }
 
-        public CombinedItemPromotion AddPromotionForCombinedItemPromotion(string promotion)
+        private Inventory AddPromotion(PromotionBase promotion)
+        {
+            if (promotion != null) promotions.Add(promotion);
+            return this;
+        }
+
+        private CombinedItemPromotion AddPromotionForCombinedItemPromotion(string promotion)
         {
             //string A B C D for 130
             List<string> promotionDetails = GetCombinedPromotionDetail(promotion);
@@ -86,7 +86,7 @@ namespace RuleEngine.Inventory
             return new CombinedItemPromotion(skuitem, price);
         }
 
-        public IndividualItemPromotion AddPromotionForIndividualFixedItemPromotion(string promotion)
+        private IndividualItemPromotion AddPromotionForIndividualFixedItemPromotion(string promotion)
         {
             List<string> promotionDetails = GetIndividualPromotionDetail(promotion);
 

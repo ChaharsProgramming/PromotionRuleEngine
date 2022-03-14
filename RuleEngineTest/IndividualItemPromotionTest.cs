@@ -151,7 +151,7 @@ namespace RuleEngineTest
         [Fact]
         public void TestApplyPromotion_SenarioA()
         {
-            //string inputPromo = "3 A for 130";
+            string inputPromo = "3 A for 130";
             var inventory = new Inventory();
             var cartItem = new CartItem();
             cartItem.IsPromotionApplied = false;

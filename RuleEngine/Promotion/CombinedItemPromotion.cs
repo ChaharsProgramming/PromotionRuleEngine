@@ -24,7 +24,7 @@ namespace RuleEngine.Promotion
             var applicableCartItem = cart.cartItems.Where(crt => !crt.IsPromotionApplied);
             foreach (var item in applicableCartItem)
             {
-                item.TotalPrice = FixedPrice / SKUItems.Count;
+                item.TotalPrice = FixedPrice / cart.cartItems.Count;
                 item.IsPromotionApplied = true;
                 pendingSKUItems.Remove(item.Item._id);
             }

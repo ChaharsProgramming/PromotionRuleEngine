@@ -15,15 +15,6 @@ namespace RuleEngineTest
 {
     public class IndividualItemPromotionTest
     {
-        //private readonly Inventory _inventory;
-        //private readonly Cart _inventory;
-
-        public IndividualItemPromotionTest()
-        {
-            //_Cart = new Mock<ICart>();
-            //_inventory = new Mock<IInventory>();
-
-        }
         [Fact]
         public void TestApplyPromotion_WithIndividualItemPromotino_ReturnExpectedReducedPrice()
         {
@@ -33,8 +24,6 @@ namespace RuleEngineTest
             cartItem.IsPromotionApplied = false;
             cartItem.Item = new SKUItem("A", 50);
             cartItem.TotalPrice = 50;
-
-            //IndividualItemPromotion individualPromotion = new("A", 130, 3);
 
             //var cart = new Cart() { cartItems = { cartItem, cartItem, cartItem } };
             inventory.AddSKUitem(new SKUItem("A", 50));

@@ -33,12 +33,14 @@ namespace RuleEngineTest
             inventory.AddSKUitem(new SKUItem("C", 20));
             inventory.AddSKUitem(new SKUItem("D", 15));
 
+            inventory.AddPromotion(inputPromo);
+
             inventory.AddItemToCart("C");
             inventory.AddItemToCart("D");
 
             Assert.Equal(Convert.ToDecimal(35), inventory._cart.TotalPrice());
 
-            inventory.AddPromotion(inputPromo);
+           
             inventory.Checkout();
 
             Assert.Equal(Convert.ToDecimal(30), inventory._cart.TotalPrice());

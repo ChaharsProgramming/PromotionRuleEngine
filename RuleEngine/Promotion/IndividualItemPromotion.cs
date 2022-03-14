@@ -29,8 +29,6 @@ namespace RuleEngine.Promotion
             reducedPrice = FixedPrice - NoOfItems * discountedItemPrice;
             foreach (var item in applicableCartItem)
             {
-                
-
                 item.TotalPrice = discountedItemPrice + reducedPrice;
                 item.IsPromotionApplied = true;
                 reducedPrice = 0;

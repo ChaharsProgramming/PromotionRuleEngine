@@ -71,30 +71,53 @@ namespace RuleEngine.Inventory
 
         private Inventory AddPromotion(PromotionBase promotion)
         {
-            if (promotion != null) promotions.Add(promotion);
-            return this;
+            try
+            {
+                if (promotion != null) promotions.Add(promotion);
+                return this;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private CombinedItemPromotion AddPromotionForCombinedItemPromotion(string promotion)
         {
-            //string A B C D for 130
-            List<string> promotionDetails = GetCombinedPromotionDetail(promotion);
 
-            var skuitem = promotionDetails.Take(promotionDetails.Count() - 1).ToList();
-            var price = Convert.ToInt32(promotionDetails.Last());
-            //new CombinedItemPromotion(skuitem, price).ApplyPromotion(_cart);
-            return new CombinedItemPromotion(skuitem, price);
+            try
+            {
+                //string A B C D for 130
+                List<string> promotionDetails = GetCombinedPromotionDetail(promotion);
+
+                var skuitem = promotionDetails.Take(promotionDetails.Count() - 1).ToList();
+                var price = Convert.ToInt32(promotionDetails.Last());
+                //new CombinedItemPromotion(skuitem, price).ApplyPromotion(_cart);
+                return new CombinedItemPromotion(skuitem, price);
+            }
+            catch (Exception ex)
+            {
+                throw new PromotionRuleEngineException("Please check the provide input",ex);
+            }
         }
 
         private IndividualItemPromotion AddPromotionForIndividualFixedItemPromotion(string promotion)
         {
-            List<string> promotionDetails = GetIndividualPromotionDetail(promotion);
+            try
+            {
+                List<string> promotionDetails = GetIndividualPromotionDetail(promotion);
 
-            var skuitems = promotionDetails[1].Replace("'s", "");
-            var noOfItems = Convert.ToInt32(promotionDetails.First());
-            var price = Convert.ToInt32(promotionDetails.Last());
-            //new IndividualItemPromotion(skuitems, price, noOfItems).ApplyPromotion(_cart);
-            return new IndividualItemPromotion(skuitems, price, noOfItems);
+                var skuitems = promotionDetails[1].Replace("'s", "");
+                var noOfItems = Convert.ToInt32(promotionDetails.First());
+                var price = Convert.ToInt32(promotionDetails.Last());
+                //new IndividualItemPromotion(skuitems, price, noOfItems).ApplyPromotion(_cart);
+                return new IndividualItemPromotion(skuitems, price, noOfItems);
+            }
+            catch (Exception ex)
+            {
+
+                throw new PromotionRuleEngineException("Please check the provide input", ex); ;
+            }
         }
 
         private static List<string> GetIndividualPromotionDetail(string promotion)
